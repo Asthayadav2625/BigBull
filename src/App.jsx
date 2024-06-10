@@ -1,7 +1,8 @@
-import { useState } from 'react'
-import './App.css'
-import Home from './component/home';
+ 
+//import Home from './component/home';
+//import PurchasedComponent from './component/PurchasedComponent';
 import {Routes, Route} from 'react-router-dom';
+import   PurchasedCoursesPage from './component/UserPurchased';
 
 
 function App() {
@@ -9,7 +10,7 @@ function App() {
   return (
     <>
     <Routes>
-      <Route path='/' element={<Home/>}/>
+      <Route path='/' element={< PurchasedCoursesPage/>}/>
     </Routes>
     </>
   )

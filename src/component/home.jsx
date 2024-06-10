@@ -140,7 +140,7 @@ const Home = () => {
                         <div className='course-feature w-80 bg-white  rounded-lg '>
                             {/* image */}
                             <div className='h-96 rounded-lg  '></div>
-                            {/* content */}
+                            {/* content */}  
                             <div className='py-4'>
                                 <h4 className='text-lg font-bold'>Beginner’s Guide to Stock Market Investing</h4>
                                 <p className='text-base'>Understand the basics, start investing, and manage risks.</p>
