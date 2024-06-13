@@ -5,6 +5,7 @@ import {Routes, Route} from 'react-router-dom';
 //import   PurchasedCoursesPage from './component/UserPurchased';
  //import Register from './component/registration';
  import UpdateProfile from './component/profile2';
+ //import EnrollNow from './component/enrollnow';
 
 
 function App() {
@@ -12,7 +13,7 @@ function App() {
   return (
     <>
     <Routes>
-      <Route path='/' element={< UpdateProfile/>}/>
+      <Route path='/' element={<UpdateProfile/>}/>
     </Routes>
     </>
   )

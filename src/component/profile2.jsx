@@ -9,6 +9,7 @@ const UpdateProfile = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [profilePicture, setProfilePicture] = useState(null);
+  const [errors, setErrors] = useState({});
   const [updateData, setUpdateData] = useState({
     name: "",
     email: "",
@@ -68,8 +69,27 @@ const UpdateProfile = () => {
 
   const allCountries = Object.keys(countryToStatesMap);
 
+  const validateForm = () => {
+    const newErrors = {};
+    Object.keys(updateData).forEach((key) => {
+      if (!updateData[key]) {
+        newErrors[key] = "This field is required";
+      }
+    });
+    if (!profilePicture) {
+      newErrors.profilePicture = "Profile picture is required";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const updateUsersDetails = async (e) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
 
     const formData = new FormData();
     for (const key in updateData) {
@@ -94,85 +114,92 @@ const UpdateProfile = () => {
     }
   };
 
+  useEffect(() => {
+    getUserProfile();
+  }, []);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-[80%] max-w-4xl">
         <h2 className="text-2xl font-bold mb-6 text-center"> Update Profile</h2>
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={updateUsersDetails}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block mb-1 text-black">Name<span className="text-red-500">*</span></label>
               <input  
-              type="text"
-              name="name"
-              value={updateData.name}
-              onChange={handleInputChange}
-              placeholder={data.name}
-              className="w-full p-2 border border-gray-300 rounded" />
+                type="text"
+                name="name"
+                value={updateData.name}
+                onChange={handleInputChange}
+                placeholder={data.name}
+                className="w-full p-2 border border-gray-300 rounded" />
+              {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
             </div>
             <div>
               <label className="block mb-1  text-black">Email<span className="text-red-500">*</span></label>
-              <input type="email" 
-              name="email"
-              value={updateData.email}
-              onChange={handleInputChange}
-              placeholder={data.email}
-              className="w-full p-2 border border-gray-300 rounded" />
+              <input 
+                type="email" 
+                name="email"
+                value={updateData.email}
+                onChange={handleInputChange}
+                placeholder={data.email}
+                className="w-full p-2 border border-gray-300 rounded" />
+              {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
             </div>
             <div>
               <label className="block mb-1  text-black">Enter Mobile number<span className="text-red-500">*</span></label>
-              <input type="text"
-              name="phone"
-              value={updateData.phone}
-              maxLength={10}
-              onChange={handleInputChange}
-              placeholder={data.phone}
-
-              className="w-full p-2 border border-gray-300 rounded" />
+              <input 
+                type="text"
+                name="phone"
+                value={updateData.phone}
+                maxLength={10}
+                onChange={handleInputChange}
+                placeholder={data.phone}
+                className="w-full p-2 border border-gray-300 rounded" />
+              {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
             </div>
             <div>
               <label className="block mb-1  text-black">Gender<span className="text-red-500">*</span></label>
               <select 
-              id="gender"
-              name="gender"
-              value={updateData.gender}
-              onChange={handleInputChange}
-              className="w-full p-2 border border-gray-300 rounded">
+                id="gender"
+                name="gender"
+                value={updateData.gender}
+                onChange={handleInputChange}
+                className="w-full p-2 border border-gray-300 rounded">
                 <option>Select an Option</option>
                 <option>Male</option>
                 <option>Female</option>
                 <option>Other</option>
               </select>
+              {errors.gender && <p className="text-red-500 text-sm">{errors.gender}</p>}
             </div>
-             
-             
             <div>
               <label className="block mb-1  text-black">Choose your country from the list<span className="text-red-500">*</span></label>
               <select 
-              id="country"
-              name="country"
-              value={updateData.country}
-              onChange={handleInputChange}
-              className="w-full p-2 border border-gray-300 rounded">
-                 <option value="">{data.country}</option>
+                id="country"
+                name="country"
+                value={updateData.country}
+                onChange={handleInputChange}
+                className="w-full p-2 border border-gray-300 rounded">
+                <option value="">{data.country}</option>
                 {allCountries.map((country) => (
                   <option key={country} value={country}>
                     {country}
                   </option>
-                ))};
+                ))}
               </select>
+              {errors.country && <p className="text-red-500 text-sm">{errors.country}</p>}
             </div>
             <div>
               <label className="block mb-1  text-black">Choose your state from the list<span className="text-red-500">*</span></label>
               <select 
-              id="state"
-              name="state"
-              value={updateData.state}
-              onChange={handleInputChange}
-              disabled={!updateData.country}
-              className="w-full p-2 border border-gray-300 rounded">
-                 <option value="">{data.state}</option>
+                id="state"
+                name="state"
+                value={updateData.state}
+                onChange={handleInputChange}
+                disabled={!updateData.country}
+                className="w-full p-2 border border-gray-300 rounded">
+                <option value="">{data.state}</option>
                 {updateData.country &&
                   countryToStatesMap[updateData.country].map((state) => (
                     <option key={state} value={state}>
@@ -180,50 +207,58 @@ const UpdateProfile = () => {
                     </option>
                   ))}
               </select>
+              {errors.state && <p className="text-red-500 text-sm">{errors.state}</p>}
             </div>
             <div>
               <label className="block mb-1  text-black">Enter City<span className="text-red-500">*</span></label>
               <input 
-              type="text"
-              name="city"
-              value={updateData.city}
-              onChange={handleInputChange}
-              placeholder={data.city}
-             className="w-full p-2 border border-gray-300 rounded" />
+                type="text"
+                name="city"
+                value={updateData.city}
+                onChange={handleInputChange}
+                placeholder={data.city}
+                className="w-full p-2 border border-gray-300 rounded" />
+              {errors.city && <p className="text-red-500 text-sm">{errors.city}</p>}
             </div>
             <div>
               <label className="block mb-1  text-black">Enter Address<span className="text-red-500">*</span></label>
               <input 
-               type="text"
-               name="address"
-               value={updateData.address}
-               onChange={handleInputChange}
-               placeholder={data.address}
-               className="w-full p-2 border border-gray-300 rounded" />
+                type="text"
+                name="address"
+                value={updateData.address}
+                onChange={handleInputChange}
+                placeholder={data.address}
+                className="w-full p-2 border border-gray-300 rounded" />
+              {errors.address && <p className="text-red-500 text-sm">{errors.address}</p>}
             </div>
             <div>
               <label className="block mb-1  text-black">Enter Date of Birth<span className="text-red-500">*</span></label>
-              <input type="date" className="w-full p-2 border border-gray-300 rounded" />
+              <input 
+                type="date" 
+                name="dob"
+                value={updateData.dob}
+                onChange={handleDateChange}
+                className="w-full p-2 border border-gray-300 rounded" />
+              {errors.dob && <p className="text-red-500 text-sm">{errors.dob}</p>}
             </div>
             <div>
               <label className="block mb-1  text-black">Upload Profile Picture<span className="text-red-500">*</span></label>
               <input 
-              type="file"
-              name="profilePicture"
-              accept=".pdf, .jpg, .jpeg, .png"
-              onChange={handleBirthCertificateChange}
-              className="w-full p-2 border border-gray-300 rounded" />
+                type="file"
+                name="profilePicture"
+                accept=".pdf, .jpg, .jpeg, .png"
+                onChange={handleBirthCertificateChange}
+                className="w-full p-2 border border-gray-300 rounded" />
+              {errors.profilePicture && <p className="text-red-500 text-sm">{errors.profilePicture}</p>}
             </div>
-            
           </div>
           <div className="text-center">
             <button type="submit" className="w-full md:w-1/4 p-2 bg-red-500 text-white rounded hover:bg-red-600 transition">Submit</button>
           </div>
-           
         </form>
       </div>
     </div>
   );
 };
 
-export default  UpdateProfile;
+export default UpdateProfile;
