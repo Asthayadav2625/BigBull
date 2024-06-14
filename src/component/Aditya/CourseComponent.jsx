@@ -13,10 +13,11 @@ const CourseComponent = () => {
     { id: 3, title: 'JavaScript Basics', category: 'JavaScript', price: 29.99, date: '2023-06-11', pic: 'https://1000logos.net/wp-content/uploads/2020/09/JavaScript-Logo-1280x800.jpg' },
     { id: 4, title: 'Node.js Fundamentals', category: 'Node.js', price: 59.99, date: '2023-04-01', pic: 'https://th.bing.com/th/id/OIP.M1U-BOiIzjE8ERoPA2GqpQHaE8?w=265&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7' },
     { id: 5, title: 'CSS Flexbox', category: 'CSS', price: 19.99, date: '2023-01-10', pic: 'https://miro.medium.com/max/1400/1*_6ooq0R60ba3UT5c-QVemA.png' },
+    { id: 6, title: ' Angular', category: 'Angular', price: 19.99, date: '2024-01-10', pic: 'https://miro.medium.com/max/1400/1*_6ooq0R60ba3UT5c-QVemA.png' },
   ];
 
-  const categories = ['All', 'React', 'JavaScript', 'Node.js', 'CSS'];
-  const priceRanges = ['All', 'Under $50', '$50 - $100', 'Above $100'];
+  const categories = ['All', 'React', 'JavaScript', 'Node.js', 'CSS','Angular'];
+  const priceRanges = ['All', 'Under $50', '$50 - $100', 'Above $100','Under $50'];
   const dates = ['All', 'Last 30 Days', 'Last 6 Months', 'Last Year'];
 
   const handleFilterClick = (category) => {

@@ -46,9 +46,9 @@ const SideBar = ({ checked }) => {
             <div onMouseEnter={textEnter} onMouseLeave={textLeave} className={`wrapper ${checked ? 'active' : ''} z-40 fixed top-0 right-0 w-3/6 bg-white text-black h-full text-3xl`}>
                 <div className='flex justify-center items-center h-full'>
                     <ol  className='flex flex-col'>
-                        <li>Home</li>
-                        <li>Contact us</li>
-                        <li>Number</li>
+                        <Link to="/"> <li>Home</li></Link>
+                        <Link to="/ContactUs"><li>Contact us</li></Link>
+                        <Link to=""><li>Number</li></Link>
                     </ol>
                     <motion.div
                         className='circle fixed top-0 left-0 pointer-events-none'
